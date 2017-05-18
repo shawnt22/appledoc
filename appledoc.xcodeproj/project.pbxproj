@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29A1CD8C1ECD824F0039041A /* document-template.md in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8B1ECD824F0039041A /* document-template.md */; };
+		29A1CD8F1ECDC17F0039041A /* GBMustacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */; };
+		29B9E3BD1ECAC90C0082805D /* GBMarkdownOutputGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */; };
 		31DBC2AE18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DBC2AD18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m */; };
 		31DBC2AF18060EFF002AFE9F /* GBDocSetFinalizeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DBC2AD18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m */; };
 		4CFB67FB906500574239C6AE /* libPods-appledoc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 493739BF5A98CB9200764326 /* libPods-appledoc.a */; };
@@ -217,6 +220,11 @@
 /* Begin PBXFileReference section */
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		14017320E4AC18DD1F56E467 /* Pods-AppledocTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppledocTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppledocTests/Pods-AppledocTests.debug.xcconfig"; sourceTree = "<group>"; };
+		29A1CD8B1ECD824F0039041A /* document-template.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "document-template.md"; sourceTree = "<group>"; };
+		29A1CD8D1ECDC17F0039041A /* GBMustacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMustacheModel.h; sourceTree = "<group>"; };
+		29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMustacheModel.m; sourceTree = "<group>"; };
+		29B9E3BB1ECAC90C0082805D /* GBMarkdownOutputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMarkdownOutputGenerator.h; sourceTree = "<group>"; };
+		29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMarkdownOutputGenerator.m; sourceTree = "<group>"; };
 		2D6142603838676421CD0FBE /* Pods-appledoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appledoc.release.xcconfig"; path = "Pods/Target Support Files/Pods-appledoc/Pods-appledoc.release.xcconfig"; sourceTree = "<group>"; };
 		31DBC2AC18060C3C002AFE9F /* GBDocSetFinalizeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBDocSetFinalizeGenerator.h; sourceTree = "<group>"; };
 		31DBC2AD18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBDocSetFinalizeGenerator.m; sourceTree = "<group>"; };
@@ -514,6 +522,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		29B9E3BE1ECAC96D0082805D /* markdown */ = {
+			isa = PBXGroup;
+			children = (
+				29A1CD8B1ECD824F0039041A /* document-template.md */,
+			);
+			path = markdown;
+			sourceTree = "<group>";
+		};
 		4A40E3FA9485C42295EE7936 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,6 +577,7 @@
 		739AD36F1254449D00B642C3 /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				29B9E3BE1ECAC96D0082805D /* markdown */,
 				F59056EC16C1C6DC00391620 /* publish */,
 				7367298112A3BD9D00879D1B /* docset */,
 				73D2524312A2EA340024F9F9 /* html */,
@@ -597,6 +614,8 @@
 				7335F72A12E58DCC0094F72E /* GBDocSetInstallGenerator.m */,
 				7335F72C12E58E160094F72E /* GBDocSetPublishGenerator.h */,
 				7335F72D12E58E160094F72E /* GBDocSetPublishGenerator.m */,
+				29B9E3BB1ECAC90C0082805D /* GBMarkdownOutputGenerator.h */,
+				29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */,
 				7321D0E512944CF500796DEC /* GBTemplateHandler.h */,
 				7321D0E612944CF500796DEC /* GBTemplateHandler.m */,
 				735B2385130418A000704844 /* GBTemplateFilesHandler.h */,
@@ -896,6 +915,8 @@
 				7307B319124A1C2E007EC6B8 /* GBMethodSectionData.m */,
 				D4B844F017A122A40012C1DC /* GBEnumConstantProvider.h */,
 				D4B844F117A122A50012C1DC /* GBEnumConstantProvider.m */,
+				29A1CD8D1ECDC17F0039041A /* GBMustacheModel.h */,
+				29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -939,14 +960,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 733EA12A122BDD110060CBDE /* Build configuration list for PBXNativeTarget "AppledocTests" */;
 			buildPhases = (
-				DF3115CCC2D4D3C32EE5F33D /* 📦 Check Pods Manifest.lock */,
+				DF3115CCC2D4D3C32EE5F33D /* [CP] Check Pods Manifest.lock */,
 				733EA121122BDD020060CBDE /* Resources */,
 				733EA122122BDD020060CBDE /* Sources */,
 				733EA123122BDD020060CBDE /* Frameworks */,
 				D818BACD15203A9E00B26451 /* CopyFiles */,
 				9E9653391791A3DA0086251B /* ShellScript */,
-				17452C58DBF86D78C505A804 /* 📦 Embed Pods Frameworks */,
-				0240AEAF513A8EEA39D95E47 /* 📦 Copy Pods Resources */,
+				17452C58DBF86D78C505A804 /* [CP] Embed Pods Frameworks */,
+				0240AEAF513A8EEA39D95E47 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -961,12 +982,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "appledoc" */;
 			buildPhases = (
-				8B30B0E4E4A07773AF166FB1 /* 📦 Check Pods Manifest.lock */,
+				8B30B0E4E4A07773AF166FB1 /* [CP] Check Pods Manifest.lock */,
 				B4D1FFE715FF60B7009736E2 /* ShellScript */,
 				8DD76F990486AA7600D96B5E /* Sources */,
 				8DD76F9B0486AA7600D96B5E /* Frameworks */,
 				B4D1FFF515FF637A009736E2 /* ShellScript */,
-				3037AFD851D1C60D4B664697 /* 📦 Copy Pods Resources */,
+				3037AFD851D1C60D4B664697 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -998,6 +1019,7 @@
 				German,
 			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* appledoc */;
+			productRefGroup = 1AB674ADFE9D54B511CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -1019,14 +1041,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0240AEAF513A8EEA39D95E47 /* 📦 Copy Pods Resources */ = {
+		0240AEAF513A8EEA39D95E47 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1034,14 +1056,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppledocTests/Pods-AppledocTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		17452C58DBF86D78C505A804 /* 📦 Embed Pods Frameworks */ = {
+		17452C58DBF86D78C505A804 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1049,14 +1071,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppledocTests/Pods-AppledocTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3037AFD851D1C60D4B664697 /* 📦 Copy Pods Resources */ = {
+		3037AFD851D1C60D4B664697 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,19 +1086,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-appledoc/Pods-appledoc-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8B30B0E4E4A07773AF166FB1 /* 📦 Check Pods Manifest.lock */ = {
+		8B30B0E4E4A07773AF166FB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9E9653391791A3DA0086251B /* ShellScript */ = {
@@ -1118,19 +1140,19 @@
 			shellPath = /bin/sh;
 			shellScript = "rm default_templates.zip";
 		};
-		DF3115CCC2D4D3C32EE5F33D /* 📦 Check Pods Manifest.lock */ = {
+		DF3115CCC2D4D3C32EE5F33D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1303,10 +1325,13 @@
 				73D2524612A2ED610024F9F9 /* GBOutputGenerator.m in Sources */,
 				73473D3112A38B730011336C /* GBHTMLOutputGenerator.m in Sources */,
 				731872C512A3B75C0035509F /* GBDocSetOutputGenerator.m in Sources */,
+				29A1CD8C1ECD824F0039041A /* document-template.md in Sources */,
 				73397A2812A5070700EDC035 /* GBTask.m in Sources */,
 				732E6CBD12DF02B7009DD6E0 /* NSArray+GBArray.m in Sources */,
 				7335F72B12E58DCC0094F72E /* GBDocSetInstallGenerator.m in Sources */,
+				29A1CD8F1ECDC17F0039041A /* GBMustacheModel.m in Sources */,
 				7335F72E12E58E160094F72E /* GBDocSetPublishGenerator.m in Sources */,
+				29B9E3BD1ECAC90C0082805D /* GBMarkdownOutputGenerator.m in Sources */,
 				735B23811304024600704844 /* GBDocumentData.m in Sources */,
 				735B2387130418A100704844 /* GBTemplateFilesHandler.m in Sources */,
 				73AF4EC813093570001152DB /* GBCommentComponent.m in Sources */,

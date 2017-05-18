@@ -129,6 +129,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GBApplicationSettingsProvider, sharedApplicationS
 		self.ignoredPaths = [NSMutableSet set];
         self.excludeOutputPaths = [NSMutableSet set];
 		
+        self.createMarkdown = YES;
 		self.createHTML = YES;
 		self.createDocSet = YES;
 		self.installDocSet = YES;
@@ -702,6 +703,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GBApplicationSettingsProvider, sharedApplicationS
 @synthesize embedCrossReferencesWhenProcessingMarkdown;
 @synthesize embedAppledocBoldMarkersWhenProcessingMarkdown;
 
+@synthesize createMarkdown;
 @synthesize createHTML;
 @synthesize createDocSet;
 @synthesize installDocSet;
