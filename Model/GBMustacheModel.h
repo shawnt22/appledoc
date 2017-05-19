@@ -14,7 +14,7 @@
  *. 提供了一个用于在mustache模板内换行的宏，方便markdown类模板内换行 { GB_MUSTACHE_RN_K : GB_MUSTACHE_RN_V }
  *. - mustacheHash 方法执行时有优先级 : HashDict > HashList 一般一个Model在实现GBMustacheModel扩展协议时只需实现一个方法即可，要么是HashDic，要么是HashList
  *. GBMustacheModelHelper工具接口里提供的 + addMustacheHash 方法主要思路是直接指定model内可hash的方法名，通过runtime动态填充到hash信息内
- *. + addMustacheHash 方法指定基本类型的方法名时，需要通过 isna(str) 宏添加特殊的前缀来特殊处理
+ *. + addMustacheHash 方法指定基本类型的方法名时，需要通过 a_isna(str) 宏添加特殊的前缀来特殊处理
  
  */
 
@@ -67,6 +67,7 @@
 @end
 
 @interface GBMethodArgument (GRMustacheHash) <GBMustacheModel>
+- (NSString *)argumentTypeDesc;
 
 @end
 
@@ -106,6 +107,12 @@
 
 @end
 
+#pragma mark - BASE
+
+@interface NSDictionary (GRMustacheHash) <GBMustacheModel>
+
+@end
+
 @interface NSArray (GRMustacheHash) <GBMustacheModel>
 
 @end
@@ -135,6 +142,8 @@
 + (BOOL)hasIsnaPrefix:(NSString *)str;
 + (NSString *)addIsnaPrefix:(NSString *)str;
 + (NSString *)removeIsnaPrefix:(NSString *)str;
+
++ (NSString *)argumentTypeDesc:(id)type;
 @end
 
 @interface NSMutableArray (GBHelpers)

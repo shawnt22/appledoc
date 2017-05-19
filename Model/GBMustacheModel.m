@@ -145,8 +145,72 @@
                                                            @"methodArguments",
                                                            @"methodSelector",
                                                            @"methodReturnType",
-                                                           @"methodTypeString"] toDict:dict];
+                                                           @"methodTypeString",
+                                                           @"formatedArguments",
+                                                           @"formatedResults",
+                                                           @"formatedTypePrefix"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
+}
+- (NSArray *)formatedArguments
+{
+    NSMutableArray *list = nil;
+    if (self.comment.hasMethodParameters) {
+        list = [NSMutableArray arrayWithCapacity:[self.methodArguments count]];
+        for (NSInteger index = 0; index < [self.methodArguments count]; index++) {
+            GBCommentArgument *commentArgument = index < [self.comment.methodParameters count] ? self.comment.methodParameters[index] : nil;
+            GBMethodArgument *methodArgument = self.methodArguments[index];
+            
+            NSString *arguVar = methodArgument.argumentVar;
+            NSString *arguType = [methodArgument argumentTypeDesc];
+            GBCommentComponent *component = [commentArgument.argumentDescription.components firstObject];
+            NSString *arguDesc = component.stringValue;
+            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+            [dict setObjectSafely:arguVar forKey:@"arguVar"];
+            [dict setObjectSafely:arguType forKey:@"arguType"];
+            [dict setObjectSafely:arguDesc forKey:@"arguDesc"];
+            
+            [list addObjectSafely:dict];
+        }
+    }
+    return [NSArray arrayWithArray:list];
+}
+- (NSArray *)formatedResults
+{
+    NSMutableArray *list = nil;
+    if (self.comment.hasMethodResult) {
+        list = [NSMutableArray arrayWithCapacity:[self.methodResultTypes count]];
+        
+        for (NSInteger index = 0; index < [self.methodResultTypes count]; index++) {
+            GBCommentComponent *component = index < [self.comment.methodResult.components count] ? self.comment.methodResult.components[index] : nil;
+            NSString *type = self.methodResultTypes[index];
+            
+            NSString *arguType = [GBMustacheModelHelper argumentTypeDesc:type];
+            NSString *arguDesc = component.stringValue;
+            
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+            [dict setObjectSafely:arguDesc forKey:@"arguDesc"];
+            [dict setObjectSafely:arguType forKey:@"arguType"];
+            
+            [list addObjectSafely:dict];
+        }
+    }
+    return [NSArray arrayWithArray:list];
+}
+- (NSString *)formatedTypePrefix
+{
+    NSString *prefix = nil;
+    switch (self.methodType) {
+        case GBMethodTypeClass:
+            prefix = @"+";
+            break;
+        case GBMethodTypeInstance:
+            prefix = @"-";
+            break;
+        default:
+            break;
+    }
+    return prefix;
 }
 
 @end
@@ -162,12 +226,17 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [GBMustacheModelHelper addMustacheHash:self selNames:@[@"argumentName",
                                                            @"argumentTypes",
-                                                           @"argumentVar"] toDict:dict];
+                                                           @"argumentVar",
+                                                           @"argumentTypeDesc"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 - (NSArray *)mustacheHashList
 {
     return nil;
+}
+- (NSString *)argumentTypeDesc
+{
+    return [GBMustacheModelHelper argumentTypeDesc:self.argumentTypes];
 }
 
 @end
@@ -370,6 +439,32 @@
 
 @end
 
+#pragma mark -
+
+@implementation NSDictionary (GRMustacheHash)
+
+- (id)mustacheHash
+{
+    return [GBMustacheModelHelper mustacheHash:self];
+}
+- (NSArray *)mustacheHashList
+{
+    return nil;
+}
+- (NSDictionary *)mustacheHashDict
+{
+    NSMutableDictionary *hashDict = [NSMutableDictionary dictionaryWithCapacity:[self count]];
+    [self.allKeys enumerateObjectsUsingBlock:^(NSString * _Nonnull key, NSUInteger idx, BOOL * _Nonnull stop) {
+        id<GBMustacheModel> value = self[key];
+        if ([value conformsToProtocol:@protocol(GBMustacheModel)]) {
+            [hashDict setObjectSafely:[value mustacheHash] forKey:key];
+        }
+    }];
+    return [NSDictionary dictionaryWithDictionary:hashDict];
+}
+
+@end
+
 @implementation NSArray (GRMustacheHash)
 
 - (id)mustacheHash
@@ -511,6 +606,19 @@
         return [str substringWithRange:NSMakeRange(1, [str length]-1)];
     }
     return str;
+}
+
++ (NSString *)argumentTypeDesc:(id)type
+{
+    NSMutableString *desc = [NSMutableString stringWithString:@""];
+    if ([type isKindOfClass:[NSString class]]) {
+        [desc appendString:type];
+    } else if ([type isKindOfClass:[NSArray class]]) {
+        [type enumerateObjectsUsingBlock:^(NSString *  _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
+            [desc appendString:([type isEqualToString:@"*"] ? [NSString stringWithFormat:@" %@", type] : type)];
+        }];
+    }
+    return desc;
 }
 
 @end

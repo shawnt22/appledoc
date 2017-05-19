@@ -62,8 +62,6 @@
     if (!self.settings.createMarkdown) return;
     [self.outputGenerators addObject:[GBMarkdownOutputGenerator generatorWithSettingsProvider:self.settings]];
     
-    return;
-    
 	if (!self.settings.createHTML) return;
 	[self.outputGenerators addObject:[GBHTMLOutputGenerator generatorWithSettingsProvider:self.settings]];
 	if (!self.settings.createDocSet) return;
