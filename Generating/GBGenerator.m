@@ -59,19 +59,20 @@
 	// Setups all output generators. The order of these is crucial as they are invoked in the order added to the list. This forms a dependency where each next generator can use
 	GBLogDebug(@"Initializing generation steps...");
     
-    if (!self.settings.createMarkdown) return;
-    [self.outputGenerators addObject:[GBMarkdownOutputGenerator generatorWithSettingsProvider:self.settings]];
-    
-	if (!self.settings.createHTML) return;
-	[self.outputGenerators addObject:[GBHTMLOutputGenerator generatorWithSettingsProvider:self.settings]];
-	if (!self.settings.createDocSet) return;
-	[self.outputGenerators addObject:[GBDocSetOutputGenerator generatorWithSettingsProvider:self.settings]];
-	[self.outputGenerators addObject:[GBDocSetFinalizeGenerator generatorWithSettingsProvider:self.settings]];
-	if (self.settings.installDocSet) {
-        [self.outputGenerators addObject:[GBDocSetInstallGenerator generatorWithSettingsProvider:self.settings]];
+    if (self.settings.createMarkdown) {
+        [self.outputGenerators addObject:[GBMarkdownOutputGenerator generatorWithSettingsProvider:self.settings]];
+    } else {
+        if (!self.settings.createHTML) return;
+        [self.outputGenerators addObject:[GBHTMLOutputGenerator generatorWithSettingsProvider:self.settings]];
+        if (!self.settings.createDocSet) return;
+        [self.outputGenerators addObject:[GBDocSetOutputGenerator generatorWithSettingsProvider:self.settings]];
+        [self.outputGenerators addObject:[GBDocSetFinalizeGenerator generatorWithSettingsProvider:self.settings]];
+        if (self.settings.installDocSet) {
+            [self.outputGenerators addObject:[GBDocSetInstallGenerator generatorWithSettingsProvider:self.settings]];
+        }
+        if (!self.settings.publishDocSet) return;
+        [self.outputGenerators addObject:[GBDocSetPublishGenerator generatorWithSettingsProvider:self.settings]];
     }
-	if (!self.settings.publishDocSet) return;
-	[self.outputGenerators addObject:[GBDocSetPublishGenerator generatorWithSettingsProvider:self.settings]];
 }
 
 - (void)runGeneratorStepsWithStore:(id)aStore {

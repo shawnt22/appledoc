@@ -181,19 +181,19 @@
     if (self.comment.hasMethodResult) {
         list = [NSMutableArray arrayWithCapacity:[self.methodResultTypes count]];
         
-        for (NSInteger index = 0; index < [self.methodResultTypes count]; index++) {
-            GBCommentComponent *component = index < [self.comment.methodResult.components count] ? self.comment.methodResult.components[index] : nil;
-            NSString *type = self.methodResultTypes[index];
-            
-            NSString *arguType = [GBMustacheModelHelper argumentTypeDesc:type];
-            NSString *arguDesc = component.stringValue;
-            
-            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-            [dict setObjectSafely:arguDesc forKey:@"arguDesc"];
-            [dict setObjectSafely:arguType forKey:@"arguType"];
-            
-            [list addObjectSafely:dict];
-        }
+        GBCommentComponent *component = [self.comment.methodResult.components firstObject];
+        NSString *arguDesc = component.stringValue;
+        
+        NSMutableString *arguType = [NSMutableString stringWithString:@""];
+        [self.methodResultTypes enumerateObjectsUsingBlock:^(NSString * _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
+            [arguType appendString:([self.methodResultTypes count]-1 == idx ? type : [NSString stringWithFormat:@"%@ ", type])];
+        }];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        [dict setObjectSafely:arguDesc forKey:@"arguDesc"];
+        [dict setObjectSafely:arguType forKey:@"arguType"];
+        
+        [list addObjectSafely:dict];
     }
     return [NSArray arrayWithArray:list];
 }
@@ -614,8 +614,8 @@
     if ([type isKindOfClass:[NSString class]]) {
         [desc appendString:type];
     } else if ([type isKindOfClass:[NSArray class]]) {
-        [type enumerateObjectsUsingBlock:^(NSString *  _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
-            [desc appendString:([type isEqualToString:@"*"] ? [NSString stringWithFormat:@" %@", type] : type)];
+        [type enumerateObjectsUsingBlock:^(NSString *  _Nonnull atype, NSUInteger idx, BOOL * _Nonnull stop) {
+            [desc appendString:([type count]-1 == idx ? atype : [NSString stringWithFormat:@"%@ ", atype])];
         }];
     }
     return desc;

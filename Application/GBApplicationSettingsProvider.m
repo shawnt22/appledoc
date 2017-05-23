@@ -130,7 +130,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GBApplicationSettingsProvider, sharedApplicationS
         self.excludeOutputPaths = [NSMutableSet set];
 		
         self.createMarkdown = YES;
-		self.createHTML = NO;
+		self.createHTML = YES;
 		self.createDocSet = YES;
 		self.installDocSet = YES;
 		self.publishDocSet = NO;
