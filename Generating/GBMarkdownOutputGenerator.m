@@ -47,7 +47,7 @@
             NSString *filename = [NSString stringWithFormat:@"%@_%@.md", class.nameOfClass, method.methodSelector];
             filename = [filename lowercaseString];
             filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@"_"];
-            NSString *path = [[self.settings.outputPath stringByAppendingPathComponent:filename] stringByStandardizingPath];
+            NSString *path = [[self.outputUserPath stringByAppendingPathComponent:filename] stringByStandardizingPath];
             
             GBLogDebug(@"markdown output path : %@", path);
             

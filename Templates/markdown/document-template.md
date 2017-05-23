@@ -16,11 +16,11 @@ title: {{methodData.methodSelector}}
 </tr>
 </table>
 
-> {{methodData.comment.shortDescription.stringValue}}
+{{methodData.comment.shortDescription.stringValue}}
 > {{#methodData.comment.longDescription.components}}{{stringValue}}{{/methodData.comment.longDescription.components}}
 
 {{#methodData.comment.hasMethodParameters}}
-### 入参
+### 参数
 
 <table>
 <tr>
@@ -37,7 +37,7 @@ title: {{methodData.methodSelector}}
 {{/methodData.comment.hasMethodParameters}}
 
 {{#methodData.comment.hasMethodResult}}
-### 出参
+### 返回值
 
 <table>
 <tr>
