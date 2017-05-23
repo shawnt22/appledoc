@@ -32,6 +32,7 @@
         GBLogInfo(@"Generating output for class %@...", class);
         
         for (GBMethodData *method in class.methods.methods) {
+            
             NSMutableDictionary *hash = [NSMutableDictionary dictionary];
             
             NSMutableDictionary *methodData = [NSMutableDictionary dictionaryWithDictionary:[method mustacheHash]];
@@ -44,16 +45,18 @@
             NSString *output = [[self documentTemplate] renderObject:hash];
             
             NSString *filename = [NSString stringWithFormat:@"%@_%@.md", class.nameOfClass, method.methodSelector];
+            filename = [filename lowercaseString];
+            filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@"_"];
             NSString *path = [[self.settings.outputPath stringByAppendingPathComponent:filename] stringByStandardizingPath];
             
-            NSLog(@"markdown output path : %@", path);
+            GBLogDebug(@"markdown output path : %@", path);
             
             if (![self writeString:output toFile:path error:error]) {
                 NSLog(@"Failed writing Markdown for class %@ to '%@'!", class, path);
                 GBLogWarn(@"Failed writing Markdown for class %@ to '%@'!", class, path);
                 return NO;
             }
-            NSLog(@"markdown output success!");
+            GBLogDebug(@"markdown output success!");
         }
         GBLogDebug(@"Finished generating output for class %@.", class);
     }
