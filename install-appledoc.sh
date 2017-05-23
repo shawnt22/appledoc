@@ -42,6 +42,8 @@ done
 echo "Building..."
 xcodebuild -workspace appledoc.xcworkspace -scheme appledoc -derivedDataPath /tmp -configuration Release install
 
+INSTALL_TEMPLATES="YES"
+
 install -v /tmp/Build/Intermediates/ArchiveIntermediates/appledoc/InstallationBuildProductsLocation/usr/local/bin/appledoc "$BINARY_DIR"
 
 if [ "$INSTALL_TEMPLATES" == "YES" ]; then
