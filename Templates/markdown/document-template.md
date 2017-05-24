@@ -3,18 +3,7 @@ category: {{classData.nameOfClass}}
 title: {{methodData.methodSelector}}
 ---
 
-## {{methodData.formatedTypePrefix}} {{methodData.methodSelector}}
-
-<table>
-<tr>
-<td>归属类</th>
-<td>{{classData.nameOfClass}}</th>
-</tr>
-<tr>
-<td>类型</td>
-<td>TODO</td>
-</tr>
-</table>
+## {{methodData.formatedTypePrefix}} {{methodData.methodSelector}} `{{classData.nameOfClass}}`
 
 {{methodData.comment.shortDescription.stringValue}}
 > {{#methodData.comment.longDescription.components}}{{stringValue}}{{/methodData.comment.longDescription.components}}
