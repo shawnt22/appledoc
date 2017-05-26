@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		291D1E401ED821BC00FB0F53 /* GBCommentFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 291D1E3F1ED821BC00FB0F53 /* GBCommentFormatter.m */; };
 		29A1CD8C1ECD824F0039041A /* document-template.md in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8B1ECD824F0039041A /* document-template.md */; };
 		29A1CD8F1ECDC17F0039041A /* GBMustacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */; };
 		29B9E3BD1ECAC90C0082805D /* GBMarkdownOutputGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */; };
@@ -220,6 +221,8 @@
 /* Begin PBXFileReference section */
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		14017320E4AC18DD1F56E467 /* Pods-AppledocTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppledocTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppledocTests/Pods-AppledocTests.debug.xcconfig"; sourceTree = "<group>"; };
+		291D1E3E1ED821BC00FB0F53 /* GBCommentFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBCommentFormatter.h; sourceTree = "<group>"; };
+		291D1E3F1ED821BC00FB0F53 /* GBCommentFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBCommentFormatter.m; sourceTree = "<group>"; };
 		29A1CD8B1ECD824F0039041A /* document-template.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "document-template.md"; sourceTree = "<group>"; };
 		29A1CD8D1ECDC17F0039041A /* GBMustacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMustacheModel.h; sourceTree = "<group>"; };
 		29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMustacheModel.m; sourceTree = "<group>"; };
@@ -917,6 +920,8 @@
 				D4B844F117A122A50012C1DC /* GBEnumConstantProvider.m */,
 				29A1CD8D1ECDC17F0039041A /* GBMustacheModel.h */,
 				29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */,
+				291D1E3E1ED821BC00FB0F53 /* GBCommentFormatter.h */,
+				291D1E3F1ED821BC00FB0F53 /* GBCommentFormatter.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1307,6 +1312,7 @@
 				7367298412A3D7A000879D1B /* NSError+GBError.m in Sources */,
 				73F2CA76123E4161009B406B /* GBCommentsProcessor.m in Sources */,
 				73F2CA77123E4161009B406B /* GBProcessor.m in Sources */,
+				291D1E401ED821BC00FB0F53 /* GBCommentFormatter.m in Sources */,
 				7307B31B124A1C2E007EC6B8 /* GBMethodSectionData.m in Sources */,
 				736B2BF7124BCBB6009145B1 /* GBSourceInfo.m in Sources */,
 				DA98B5921972151100059171 /* GBTypedefBlockArgument.m in Sources */,

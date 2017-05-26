@@ -12,6 +12,7 @@
 #import "GBDataObjects.h"
 #import "GBCommentsProcessor.h"
 #import "GBCommentsProcessor+CodeBlockProcessing.h"
+#import "GBCommentFormatter.h"
 
 @interface GBCrossRefData : NSObject
 
@@ -172,8 +173,17 @@ typedef NSUInteger GBProcessingFlag;
 	self.reservedShortDescriptionData = nil;
 	self.currentComment = comment;
 	self.currentContext = context;
-	self.store = aStore;	
+	self.store = aStore;
+    
+    NSLog(@"process comment.string -- \n%@\n", comment.stringValue);
+    
+    
 	NSArray *lines = [comment.stringValue arrayOfLines];
+    
+    NSLog(@"process comment.string lines --\n%@\n", lines);
+    
+    NSLog(@"process comment.string formatters --\n%@\n", [[GBCommentFormatterProvider new] formatComment:comment]);
+    
 	NSUInteger line = comment.sourceInfo.lineNumber;
 	NSRange blockRange = NSMakeRange(0, 0);
 	NSRange shortRange = NSMakeRange(0, 0);
@@ -229,6 +239,9 @@ typedef NSUInteger GBProcessingFlag;
 	NSArray *block = [lines subarrayWithRange:blockRange];
 	if ([self isLineMatchingDirectiveStatement:[block firstObject]]) {
 		NSString *string = [self stringByCombiningTrimmedLines:block];
+        
+        NSLog(@"ddeeff -- %@", string);
+        
 		if ([self processDiscussionBlockInString:string lines:lines blockRange:blockRange shortRange:shortRange]) return;
 		if ([self processAbstractBlockInString:string lines:lines blockRange:blockRange shortRange:shortRange]) return;
 		if ([self processNoteBlockInString:string lines:lines blockRange:blockRange shortRange:shortRange]) return;
