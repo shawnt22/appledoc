@@ -23,22 +23,19 @@
 
 @implementation GBCommentFormatterProvider
 
-- (NSArray *)formatComment:(GBComment *)comment
+- (NSArray *)formatComment:(NSString *)comment
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:1];
     
-    NSArray *sections = [self sectionsFromLines:[comment.stringValue arrayOfLines]];
+    NSArray *sections = [self sectionsFromLines:[comment arrayOfLines]];
     for (NSArray *lines in sections) {
-        NSString *commentString = @"";
-        for (NSUInteger index = 0; index < [lines count]; index++) {
-            //  组装回原字符串
-            commentString = [NSString stringWithFormat:@"%@%@%@", commentString, (index==[lines count]-1 ? @"" : @"\n"), lines[index]];
-        }
-        GBCommentFormatter *formatter = [GBCommentFormatter new];
-        formatter.commentString = commentString;
+        NSString *sectionString = [NSString stringByCombiningLines:lines delimitWith:@"\n"];
         
-        [self separateString:commentString formatterInfo:^(NSString *name, NSString *desc, NSString *value) {
-            formatter.name = name;
+        GBCommentFormatter *formatter = [GBCommentFormatter new];
+        formatter.commentString = sectionString;
+        
+        [self separateString:sectionString formatterInfo:^(NSString *name, NSString *desc, NSString *value) {
+            formatter.name = [self convertFormatterKey:name];   //  规范key格式
             formatter.desc = desc;
             formatter.value = value;
         }];
@@ -87,7 +84,7 @@
     }
     
     //  其次填充 value
-    if ([name length] > 0 && [self hasValue:string]) {
+    if ([name length] > 0 && [self hasValue:name]) {
         BOOL hasValue = NO;
         NSUInteger oriLoc = loc;    //  缓存原游标
         while (loc < [string length]) {
@@ -126,10 +123,9 @@
     
     if (formatterInfo) formatterInfo(name, desc, value);
 }
-- (BOOL)hasValue:(NSString *)string
+- (BOOL)hasValue:(NSString *)name
 {
-    NSArray *components = [string captureComponentsMatchedByRegex:[[GBCommentComponentsProvider provider] parameterDescriptionRegex]];
-    return [components count] > 0 ? YES : NO;
+    return [[self convertFormatterKey:name] isEqualToString:K_GBCOMMENT_FORMATTER_PARAM] ? YES : NO;
 }
 - (BOOL)checkValue:(NSString *)value
 {
@@ -153,5 +149,78 @@
     if ([section count] > 0)  [results addObject:section];    //  追加最后一组
     return results;
 }
+
+- (NSString *)convertFormatterKey:(NSString *)key
+{
+    if (matchedFormatterKey(@[@"param"], key)) {
+        return K_GBCOMMENT_FORMATTER_PARAM;
+    } else if (matchedFormatterKey(@[@"result", @"return"], key)) {
+        return K_GBCOMMENT_FORMATTER_RESULT;
+    } else if (matchedFormatterKey(@[@"sample"], key)) {
+        return K_GBCOMMENT_FORMATTER_SAMPLE;
+    } else if (matchedFormatterKey(@[@"abstract"], key)) {
+        return K_GBCOMMENT_FORMATTER_ABSTRACT;
+    } else if (matchedFormatterKey(@[@"discussion"], key)) {
+        return K_GBCOMMENT_FORMATTER_DISCUSSION;
+    } else if (matchedFormatterKey(@[@"header"], key)) {
+        return K_GBCOMMENT_FORMATTER_HEADER;
+    } else if (matchedFormatterKey(@[@"author"], key)) {
+        return K_GBCOMMENT_FORMATTER_AUTHOR;
+    } else if (matchedFormatterKey(@[@"version"], key)) {
+        return K_GBCOMMENT_FORMATTER_VERSION;
+    }
+    return [key lowercaseString];
+}
+NS_INLINE BOOL matchedFormatterKey(NSArray *keys, NSString *key)
+{
+    return (key && [keys containsObject:[key lowercaseString]]) ? YES : NO;
+}
+
+@end
+
+#import <objc/runtime.h>
+
+#define runtimeAddRProperty(P, type, p, con) \
+- (void)P:(type)p {\
+    objc_setAssociatedObject(self, con, p, OBJC_ASSOCIATION_RETAIN);\
+}\
+- (type)p {\
+    return objc_getAssociatedObject(self, con);\
+}\
+
+@implementation GBComment (CommentFormatter)
+
+- (void)dispatchFormatters
+{
+    self.formattedParams = [self formattedItems:K_GBCOMMENT_FORMATTER_PARAM];
+    self.formattedResults = [self formattedItems:K_GBCOMMENT_FORMATTER_RESULT];
+    self.formattedResult = [self.formattedResults firstObject];
+    self.formattedSample = [[self formattedItems:K_GBCOMMENT_FORMATTER_SAMPLE] firstObject];
+    self.formattedAbstract = [[self formattedItems:K_GBCOMMENT_FORMATTER_ABSTRACT] firstObject];
+    self.formattedDiscussion = [[self formattedItems:K_GBCOMMENT_FORMATTER_DISCUSSION] firstObject];
+    self.formattedHeader = [[self formattedItems:K_GBCOMMENT_FORMATTER_HEADER] firstObject];
+    self.formattedAuthor = [[self formattedItems:K_GBCOMMENT_FORMATTER_AUTHOR] firstObject];
+    self.formattedVersion = [[self formattedItems:K_GBCOMMENT_FORMATTER_VERSION] firstObject];
+}
+- (NSArray *)formattedItems:(NSString *)name
+{
+    NSMutableArray *results = [NSMutableArray arrayWithCapacity:1];
+    for (GBCommentFormatter *formatter in self.formatters) {
+        if (formatter.name && [[name lowercaseString] isEqualToString:[formatter.name lowercaseString]]) {
+            [results addObject:formatter];
+        }
+    }
+    return results;
+}
+
+runtimeAddRProperty(setFormattedParams, NSArray *, formattedParams, "GB_COM_FORMAT_formattedParams")
+runtimeAddRProperty(setFormattedResults, NSArray *, formattedResults, "GB_COM_FORMAT_formattedResults")
+runtimeAddRProperty(setFormattedResult, GBCommentFormatter *, formattedResult, "GB_COM_FORMAT_formattedResult")
+runtimeAddRProperty(setFormattedSample, GBCommentFormatter *, formattedSample, "GB_COM_FORMAT_formattedSample")
+runtimeAddRProperty(setFormattedAbstract, GBCommentFormatter *, formattedAbstract, "GB_COM_FORMAT_formattedAbstract")
+runtimeAddRProperty(setFormattedDiscussion, GBCommentFormatter *, formattedDiscussion, "GB_COM_FORMAT_formattedDiscussion")
+runtimeAddRProperty(setFormattedHeader, GBCommentFormatter *, formattedHeader, "GB_COM_FORMAT_formattedHeader")
+runtimeAddRProperty(setFormattedAuthor, GBCommentFormatter *, formattedAuthor, "GB_COM_FORMAT_formattedAuthor")
+runtimeAddRProperty(setFormattedVersion, GBCommentFormatter *, formattedVersion, "GB_COM_FORMAT_formattedVersion")
 
 @end

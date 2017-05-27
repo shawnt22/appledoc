@@ -11,6 +11,7 @@
 @class GBSourceInfo;
 @class GBCommentComponent;
 @class GBCommentComponentsList;
+@class GBCommentFormatter;
 
 /** Handles all comment related stuff.
  
@@ -196,5 +197,13 @@
 
 /** Comment's raw string value as declared in source code. */
 @property (copy) NSString *stringValue;
+
+/**
+ Comment's formated info list.
+ This is a list of GBCommentFormatter objects.
+ 
+ @see GBCommentFormatter
+ */
+@property (strong) NSArray *formatters;
 
 @end

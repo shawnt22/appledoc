@@ -148,7 +148,9 @@
                                                            @"methodTypeString",
                                                            @"formatedArguments",
                                                            @"formatedResults",
-                                                           @"formatedTypePrefix"] toDict:dict];
+                                                           @"formatedTypePrefix",
+                                                           @"formattedSample",
+                                                           a_isna(@"hasFormattedSample")] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 - (NSArray *)formatedArguments
@@ -211,6 +213,20 @@
             break;
     }
     return prefix;
+}
+- (NSString *)formattedSample
+{
+    NSString *sample = nil;
+    for (GBCommentFormatter *formatter in self.comment.formatters) {
+        if ([formatter.name isEqualToString:@"sample"]) {
+            sample = formatter.desc;
+        }
+    }
+    return sample;
+}
+- (NSValue *)hasFormattedSample_VALUE
+{
+    return @([[self formattedSample] length] > 0 ? YES : NO);
 }
 
 @end
@@ -348,7 +364,8 @@
                                                            a_isna(@"hasMethodParameters"),
                                                            a_isna(@"hasMethodExceptions"),
                                                            a_isna(@"hasMethodResult"),
-                                                           a_isna(@"hasAvailability")] toDict:dict];
+                                                           a_isna(@"hasAvailability"),
+                                                           @"formatters"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 - (NSValue *)hasShortDescription_VALUE
@@ -434,6 +451,27 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [GBMustacheModelHelper addMustacheHash:self selNames:@[@"argumentName",
                                                            @"argumentDescription"] toDict:dict];
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
+
+@end
+
+@implementation GBCommentFormatter (GRMustacheHash)
+
+- (id)mustacheHash
+{
+    return [GBMustacheModelHelper mustacheHash:self];
+}
+- (NSArray *)mustacheHashList
+{
+    return nil;
+}
+- (NSDictionary *)mustacheHashDict
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [GBMustacheModelHelper addMustacheHash:self selNames:@[@"name",
+                                                           @"desc",
+                                                           @"value"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 

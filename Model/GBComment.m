@@ -8,6 +8,13 @@
 
 #import "GBDataObjects.h"
 #import "GBComment.h"
+#import "GBCommentFormatter.h"
+
+@interface GBComment ()
+{
+    NSString *_stringValue;
+}
+@end
 
 @implementation GBComment
 
@@ -81,10 +88,21 @@
 	return (self.originalContext != nil);
 }
 
+- (void)setStringValue:(NSString *)stringValue
+{
+    _stringValue = stringValue;
+    self.formatters = [[GBCommentFormatterProvider new] formatComment:self.stringValue];
+    [self dispatchFormatters];
+}
+- (NSString *)stringValue
+{
+    return _stringValue;
+}
+
 @synthesize originalContext;
 @synthesize isProcessed;
 @synthesize sourceInfo;
-@synthesize stringValue;
+@synthesize stringValue = _stringValue;
 
 @synthesize shortDescription;
 @synthesize longDescription;
@@ -94,5 +112,7 @@
 @synthesize methodExceptions;
 @synthesize methodResult;
 @synthesize availability;
+
+@synthesize formatters;
 
 @end

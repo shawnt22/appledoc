@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import <GRMustache/GRMustache.h>
 #import "GBDataObjects.h"
+#import "GBCommentFormatter.h"
 
 #define GB_MUSTACHE_RN_K @"rn"  //  模板内换行符 - KEY
 #define GB_MUSTACHE_RN_V @"\n"  //  模板内换行符 - VALUE
@@ -104,6 +105,10 @@
 @end
 
 @interface GBCommentArgument (GRMustacheHash) <GBMustacheModel>
+
+@end
+
+@interface GBCommentFormatter (GRMustacheHash) <GBMustacheModel>
 
 @end
 

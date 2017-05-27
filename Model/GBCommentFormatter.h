@@ -27,6 +27,30 @@
  @param comment parse后的注释对象，主要使用其内的stringValue字段
  @return 格式化后的注释数组，元素为 GBCommentFormatter
  */
-- (NSArray *)formatComment:(GBComment *)comment;
+- (NSArray *)formatComment:(NSString *)comment;
+
+@end
+
+#define K_GBCOMMENT_FORMATTER_PARAM         @"param"        //  参数
+#define K_GBCOMMENT_FORMATTER_RESULT        @"result"       //  结果
+#define K_GBCOMMENT_FORMATTER_SAMPLE        @"sample"       //  示例
+#define K_GBCOMMENT_FORMATTER_ABSTRACT      @"abstract"     //  简略描述
+#define K_GBCOMMENT_FORMATTER_DISCUSSION    @"discussion"   //  详细描述
+#define K_GBCOMMENT_FORMATTER_HEADER        @"header"
+#define K_GBCOMMENT_FORMATTER_AUTHOR        @"author"
+#define K_GBCOMMENT_FORMATTER_VERSION       @"version"
+
+@interface GBComment (CommentFormatter)
+@property (nonatomic, strong) NSArray *formattedParams;
+@property (nonatomic, strong) NSArray *formattedResults;
+@property (nonatomic, strong) GBCommentFormatter *formattedResult;
+@property (nonatomic, strong) GBCommentFormatter *formattedSample;
+@property (nonatomic, strong) GBCommentFormatter *formattedAbstract;
+@property (nonatomic, strong) GBCommentFormatter *formattedDiscussion;
+@property (nonatomic, strong) GBCommentFormatter *formattedHeader;
+@property (nonatomic, strong) GBCommentFormatter *formattedAuthor;
+@property (nonatomic, strong) GBCommentFormatter *formattedVersion;
+
+- (void)dispatchFormatters;
 
 @end
