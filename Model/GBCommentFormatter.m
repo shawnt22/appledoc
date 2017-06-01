@@ -216,6 +216,9 @@ NS_INLINE BOOL matchedFormatterKey(NSArray *keys, NSString *key)
     //  single-item
     self.com_abstract = [[self formattedItems:K_GBCOMMENT_FORMATTER_ABSTRACT] firstObject];
     self.com_discussion = [[self formattedItems:K_GBCOMMENT_FORMATTER_DISCUSSION] firstObject];
+    if (!self.com_discussion) {
+        self.com_discussion = [[self formattedItems:@""] firstObject];
+    }
     self.com_header = [[self formattedItems:K_GBCOMMENT_FORMATTER_HEADER] firstObject];
     self.com_author = [[self formattedItems:K_GBCOMMENT_FORMATTER_AUTHOR] firstObject];
     self.com_version = [[self formattedItems:K_GBCOMMENT_FORMATTER_VERSION] firstObject];
@@ -228,8 +231,12 @@ NS_INLINE BOOL matchedFormatterKey(NSArray *keys, NSString *key)
 {
     NSMutableArray *results = [NSMutableArray arrayWithCapacity:1];
     for (GBCommentFormatter *formatter in self.formatters) {
-        if (formatter.name && [[name lowercaseString] isEqualToString:[formatter.name lowercaseString]]) {
+        if ([name length] == 0 && [formatter.name length] == 0) {
             [results addObject:formatter];
+        } else {
+            if (formatter.name && [[name lowercaseString] isEqualToString:[formatter.name lowercaseString]]) {
+                [results addObject:formatter];
+            }
         }
     }
     return results;
