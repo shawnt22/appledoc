@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		291D1E401ED821BC00FB0F53 /* GBCommentFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 291D1E3F1ED821BC00FB0F53 /* GBCommentFormatter.m */; };
-		29A1CD8C1ECD824F0039041A /* document-template.md in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8B1ECD824F0039041A /* document-template.md */; };
 		29A1CD8F1ECDC17F0039041A /* GBMustacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */; };
+		29B9DA731EDFFEA900DAC584 /* class-method-template.md in Sources */ = {isa = PBXBuildFile; fileRef = 29B9DA721EDFFEA900DAC584 /* class-method-template.md */; };
 		29B9E3BD1ECAC90C0082805D /* GBMarkdownOutputGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */; };
 		31DBC2AE18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DBC2AD18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m */; };
 		31DBC2AF18060EFF002AFE9F /* GBDocSetFinalizeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DBC2AD18060C3C002AFE9F /* GBDocSetFinalizeGenerator.m */; };
@@ -223,9 +223,9 @@
 		14017320E4AC18DD1F56E467 /* Pods-AppledocTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppledocTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppledocTests/Pods-AppledocTests.debug.xcconfig"; sourceTree = "<group>"; };
 		291D1E3E1ED821BC00FB0F53 /* GBCommentFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBCommentFormatter.h; sourceTree = "<group>"; };
 		291D1E3F1ED821BC00FB0F53 /* GBCommentFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBCommentFormatter.m; sourceTree = "<group>"; };
-		29A1CD8B1ECD824F0039041A /* document-template.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "document-template.md"; sourceTree = "<group>"; };
 		29A1CD8D1ECDC17F0039041A /* GBMustacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMustacheModel.h; sourceTree = "<group>"; };
 		29A1CD8E1ECDC17F0039041A /* GBMustacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMustacheModel.m; sourceTree = "<group>"; };
+		29B9DA721EDFFEA900DAC584 /* class-method-template.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "class-method-template.md"; sourceTree = "<group>"; };
 		29B9E3BB1ECAC90C0082805D /* GBMarkdownOutputGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBMarkdownOutputGenerator.h; sourceTree = "<group>"; };
 		29B9E3BC1ECAC90C0082805D /* GBMarkdownOutputGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBMarkdownOutputGenerator.m; sourceTree = "<group>"; };
 		2D6142603838676421CD0FBE /* Pods-appledoc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appledoc.release.xcconfig"; path = "Pods/Target Support Files/Pods-appledoc/Pods-appledoc.release.xcconfig"; sourceTree = "<group>"; };
@@ -528,7 +528,7 @@
 		29B9E3BE1ECAC96D0082805D /* markdown */ = {
 			isa = PBXGroup;
 			children = (
-				29A1CD8B1ECD824F0039041A /* document-template.md */,
+				29B9DA721EDFFEA900DAC584 /* class-method-template.md */,
 			);
 			path = markdown;
 			sourceTree = "<group>";
@@ -1331,7 +1331,6 @@
 				73D2524612A2ED610024F9F9 /* GBOutputGenerator.m in Sources */,
 				73473D3112A38B730011336C /* GBHTMLOutputGenerator.m in Sources */,
 				731872C512A3B75C0035509F /* GBDocSetOutputGenerator.m in Sources */,
-				29A1CD8C1ECD824F0039041A /* document-template.md in Sources */,
 				73397A2812A5070700EDC035 /* GBTask.m in Sources */,
 				732E6CBD12DF02B7009DD6E0 /* NSArray+GBArray.m in Sources */,
 				7335F72B12E58DCC0094F72E /* GBDocSetInstallGenerator.m in Sources */,
@@ -1349,6 +1348,7 @@
 				B4D1FFE115FF5F05009736E2 /* DDZipWriter.m in Sources */,
 				DA98B5911972151100059171 /* GBTypedefBlockData.m in Sources */,
 				B4D1FFE315FF5F05009736E2 /* DDEmbeddedDataReader.m in Sources */,
+				29B9DA731EDFFEA900DAC584 /* class-method-template.md in Sources */,
 				B4D1FFE515FF5F05009736E2 /* DDXcodeProjectFile.m in Sources */,
 				D4B844EC17A121040012C1DC /* GBTypedefEnumData.m in Sources */,
 				D4B844EF17A122670012C1DC /* GBEnumConstantData.m in Sources */,

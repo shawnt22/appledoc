@@ -50,7 +50,7 @@
             
             [hash setObjectSafely:[class mustacheHash] forKey:@"classData"];
             
-            NSString *output = [[self documentTemplate] renderObject:hash];
+            NSString *output = [[self classmethodTemplate] renderObject:hash];
             
             NSString *filename = [NSString stringWithFormat:@"%@_%@.md", class.nameOfClass, method.methodSelector];
             filename = [filename lowercaseString];
@@ -80,18 +80,18 @@
 }
 - (BOOL)validateTemplates:(NSError **)error
 {
-    if (!self.documentTemplate) {
+    if (!self.classmethodTemplate) {
         if (error) {
-            NSString *desc = [NSString stringWithFormat:@"Object template file 'document-template.md' is missing at '%@'!", self.templateUserPath];
+            NSString *desc = [NSString stringWithFormat:@"Object template file 'class-method-template.md' is missing at '%@'!", self.templateUserPath];
             *error = [NSError errorWithCode:GBErrorHTMLObjectTemplateMissing description:desc reason:nil];
         }
         return NO;
     }
     return YES;
 }
-- (GBTemplateHandler *)documentTemplate
+- (GBTemplateHandler *)classmethodTemplate
 {
-    return self.templateFiles[@"document-template.md"];
+    return self.templateFiles[@"class-method-template.md"];
 }
 - (NSString *)outputSubpath {
     return @"markdown";

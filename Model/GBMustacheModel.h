@@ -92,6 +92,10 @@
 
 @end
 
+@interface GBSourceInfo (GRMustacheHash) <GBMustacheModel>
+
+@end
+
 @interface GBComment (GRMustacheHash) <GBMustacheModel>
 
 @end

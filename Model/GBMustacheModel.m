@@ -148,6 +148,7 @@
                                                            @"methodTypeString",
                                                            @"formatedArguments",
                                                            @"formatedResults",
+                                                           @"formatedTypePrefix",
                                                            a_isna(@"hasArguments"),
                                                            a_isna(@"hasResults")] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
@@ -173,13 +174,12 @@
     if ([self hasArguments_VALUE]) {
         list = [NSMutableArray arrayWithCapacity:[self.methodArguments count]];
         for (NSInteger index = 0; index < [self.methodArguments count]; index++) {
-            GBCommentArgument *commentArgument = index < [self.comment.methodParameters count] ? self.comment.methodParameters[index] : nil;
             GBMethodArgument *methodArgument = self.methodArguments[index];
+            GBCommentFormatter *formatter = index < [self.comment.com_params count] ? self.comment.com_params[index] : nil;
             
             NSString *arguVar = methodArgument.argumentVar;
             NSString *arguType = [methodArgument argumentTypeDesc];
-            GBCommentComponent *component = [commentArgument.argumentDescription.components firstObject];
-            NSString *arguDesc = component.stringValue;
+            NSString *arguDesc = formatter.desc;
             
             NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
             [dict setObjectSafely:arguVar forKey:@"arguVar"];
@@ -333,6 +333,25 @@
 
 @end
 
+@implementation GBSourceInfo (GRMustacheHash)
+
+- (id)mustacheHash
+{
+    return [GBMustacheModelHelper mustacheHash:self];
+}
+- (NSArray *)mustacheHashList
+{
+    return nil;
+}
+- (NSDictionary *)mustacheHashDict
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [GBMustacheModelHelper addMustacheHash:self selNames:@[@"filename"] toDict:dict];
+    return [NSDictionary dictionaryWithDictionary:dict];
+}
+
+@end
+
 @implementation GBComment (GRMustacheHash)
 
 - (id)mustacheHash
@@ -360,7 +379,8 @@
                                                            a_isna(@"hasali_sample"),
                                                            a_isna(@"hasatom_categary"),
                                                            a_isna(@"hasatom_title"),
-                                                           @"formatters"] toDict:dict];
+                                                           @"formatters",
+                                                           @"sourceInfo"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
 - (NSValue *)hascom_params_VALUE
