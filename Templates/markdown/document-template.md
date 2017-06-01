@@ -1,14 +1,14 @@
 ---
-category: {{classData.nameOfClass}}
-title: {{methodData.methodSelector}}
+category: {{methodData.comment.atom_categary.desc}}
+title: {{methodData.comment.atom_title.desc}}
 ---
 
 ## {{methodData.formatedTypePrefix}} {{methodData.methodSelector}} `{{classData.nameOfClass}}`
 
-{{methodData.comment.shortDescription.stringValue}}
-> {{#methodData.comment.longDescription.components}}{{stringValue}}{{/methodData.comment.longDescription.components}}
+{{methodData.comment.com_abstract.desc}}
+{{#methodData.comment.hascom_discussion}}> {{methodData.comment.com_discussion.desc}}{{/methodData.comment.hascom_discussion}}
 
-{{#methodData.comment.hasMethodParameters}}
+{{#methodData.hasArguments}}
 ### 参数
 
 <table>
@@ -23,9 +23,9 @@ title: {{methodData.methodSelector}}
 <td>{{arguDesc}}</td>
 </tr>{{/methodData.formatedArguments}}
 </table>
-{{/methodData.comment.hasMethodParameters}}
+{{/methodData.hasArguments}}
 
-{{#methodData.comment.hasMethodResult}}
+{{#methodData.hasResults}}
 ### 返回值
 
 <table>
@@ -38,10 +38,12 @@ title: {{methodData.methodSelector}}
 <td>{{arguDesc}}</td>
 </tr>{{/methodData.formatedResults}}
 </table>
-{{/methodData.comment.hasMethodResult}}
+{{/methodData.hasResults}}
 
+{{#methodData.comment.hasali_sample}}
 ### 示例
 
 ```
-TODO
+{{methodData.comment.ali_sample.desc}}
 ```
+{{/methodData.comment.hasali_sample}}

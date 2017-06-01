@@ -30,8 +30,16 @@
     for (GBClassData *class in self.store.classes) {
         if (!class.includeInOutput) continue;
         GBLogInfo(@"Generating output for class %@...", class);
+        NSLog(@"class.comment.formatter ***\n%@", class.comment.formatters);
         
         for (GBMethodData *method in class.methods.methods) {
+            
+            if (method.isProperty) {
+                NSLog(@"skip property %@ %@", method.methodSelector, class.nameOfClass);
+                continue;
+            }
+            NSLog(@"method.comment.formatter ---\n%@", method.comment.formatters);
+            
             
             NSMutableDictionary *hash = [NSMutableDictionary dictionary];
             

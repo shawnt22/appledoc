@@ -152,22 +152,39 @@
 
 - (NSString *)convertFormatterKey:(NSString *)key
 {
-    if (matchedFormatterKey(@[@"param"], key)) {
+    if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_PARAM, @"param"], key)) {
         return K_GBCOMMENT_FORMATTER_PARAM;
-    } else if (matchedFormatterKey(@[@"result", @"return"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_RESULT, @"result", @"return"], key)) {
         return K_GBCOMMENT_FORMATTER_RESULT;
-    } else if (matchedFormatterKey(@[@"sample"], key)) {
-        return K_GBCOMMENT_FORMATTER_SAMPLE;
-    } else if (matchedFormatterKey(@[@"abstract"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_ABSTRACT, @"abstract"], key)) {
         return K_GBCOMMENT_FORMATTER_ABSTRACT;
-    } else if (matchedFormatterKey(@[@"discussion"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_DISCUSSION, @"discussion"], key)) {
         return K_GBCOMMENT_FORMATTER_DISCUSSION;
-    } else if (matchedFormatterKey(@[@"header"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_HEADER, @"header"], key)) {
         return K_GBCOMMENT_FORMATTER_HEADER;
-    } else if (matchedFormatterKey(@[@"author"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_AUTHOR, @"author"], key)) {
         return K_GBCOMMENT_FORMATTER_AUTHOR;
-    } else if (matchedFormatterKey(@[@"version"], key)) {
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_VERSION, @"version"], key)) {
         return K_GBCOMMENT_FORMATTER_VERSION;
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_ALI_SAMPLE, @"sample"], key)) {
+        return K_GBCOMMENT_FORMATTER_ALI_SAMPLE;
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_ALI_IGNOR, @"ignor"], key)) {
+        return K_GBCOMMENT_FORMATTER_ALI_IGNOR;
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_ATOM_CATEGARY, @"categary"], key)) {
+        return K_GBCOMMENT_FORMATTER_ATOM_CATEGARY;
+        
+    } else if (matchedFormatterKey(@[K_GBCOMMENT_FORMATTER_ATOM_TITLE, @"title"], key)) {
+        return K_GBCOMMENT_FORMATTER_ATOM_TITLE;
+        
     }
     return [key lowercaseString];
 }
@@ -192,15 +209,20 @@ NS_INLINE BOOL matchedFormatterKey(NSArray *keys, NSString *key)
 
 - (void)dispatchFormatters
 {
-    self.formattedParams = [self formattedItems:K_GBCOMMENT_FORMATTER_PARAM];
-    self.formattedResults = [self formattedItems:K_GBCOMMENT_FORMATTER_RESULT];
-    self.formattedResult = [self.formattedResults firstObject];
-    self.formattedSample = [[self formattedItems:K_GBCOMMENT_FORMATTER_SAMPLE] firstObject];
-    self.formattedAbstract = [[self formattedItems:K_GBCOMMENT_FORMATTER_ABSTRACT] firstObject];
-    self.formattedDiscussion = [[self formattedItems:K_GBCOMMENT_FORMATTER_DISCUSSION] firstObject];
-    self.formattedHeader = [[self formattedItems:K_GBCOMMENT_FORMATTER_HEADER] firstObject];
-    self.formattedAuthor = [[self formattedItems:K_GBCOMMENT_FORMATTER_AUTHOR] firstObject];
-    self.formattedVersion = [[self formattedItems:K_GBCOMMENT_FORMATTER_VERSION] firstObject];
+    //  multi-item
+    self.com_params = [self formattedItems:K_GBCOMMENT_FORMATTER_PARAM];
+    self.com_results = [self formattedItems:K_GBCOMMENT_FORMATTER_RESULT];
+    
+    //  single-item
+    self.com_abstract = [[self formattedItems:K_GBCOMMENT_FORMATTER_ABSTRACT] firstObject];
+    self.com_discussion = [[self formattedItems:K_GBCOMMENT_FORMATTER_DISCUSSION] firstObject];
+    self.com_header = [[self formattedItems:K_GBCOMMENT_FORMATTER_HEADER] firstObject];
+    self.com_author = [[self formattedItems:K_GBCOMMENT_FORMATTER_AUTHOR] firstObject];
+    self.com_version = [[self formattedItems:K_GBCOMMENT_FORMATTER_VERSION] firstObject];
+    self.ali_sample = [[self formattedItems:K_GBCOMMENT_FORMATTER_ALI_SAMPLE] firstObject];
+    self.ali_ignor = [[self formattedItems:K_GBCOMMENT_FORMATTER_ALI_IGNOR] firstObject];
+    self.atom_categary = [[self formattedItems:K_GBCOMMENT_FORMATTER_ATOM_CATEGARY] firstObject];
+    self.atom_title = [[self formattedItems:K_GBCOMMENT_FORMATTER_ATOM_TITLE] firstObject];
 }
 - (NSArray *)formattedItems:(NSString *)name
 {
@@ -213,14 +235,17 @@ NS_INLINE BOOL matchedFormatterKey(NSArray *keys, NSString *key)
     return results;
 }
 
-runtimeAddRProperty(setFormattedParams, NSArray *, formattedParams, "GB_COM_FORMAT_formattedParams")
-runtimeAddRProperty(setFormattedResults, NSArray *, formattedResults, "GB_COM_FORMAT_formattedResults")
-runtimeAddRProperty(setFormattedResult, GBCommentFormatter *, formattedResult, "GB_COM_FORMAT_formattedResult")
-runtimeAddRProperty(setFormattedSample, GBCommentFormatter *, formattedSample, "GB_COM_FORMAT_formattedSample")
-runtimeAddRProperty(setFormattedAbstract, GBCommentFormatter *, formattedAbstract, "GB_COM_FORMAT_formattedAbstract")
-runtimeAddRProperty(setFormattedDiscussion, GBCommentFormatter *, formattedDiscussion, "GB_COM_FORMAT_formattedDiscussion")
-runtimeAddRProperty(setFormattedHeader, GBCommentFormatter *, formattedHeader, "GB_COM_FORMAT_formattedHeader")
-runtimeAddRProperty(setFormattedAuthor, GBCommentFormatter *, formattedAuthor, "GB_COM_FORMAT_formattedAuthor")
-runtimeAddRProperty(setFormattedVersion, GBCommentFormatter *, formattedVersion, "GB_COM_FORMAT_formattedVersion")
+runtimeAddRProperty(setCom_params, NSArray *, com_params, "GB_COM_FORMAT_com_params")
+runtimeAddRProperty(setCom_results, NSArray *, com_results, "GB_COM_FORMAT_com_results")
+runtimeAddRProperty(setCom_abstract, GBCommentFormatter *, com_abstract, "GB_COM_FORMAT_com_abstract")
+runtimeAddRProperty(setCom_discussion, GBCommentFormatter *, com_discussion, "GB_COM_FORMAT_com_discussion")
+runtimeAddRProperty(setCom_header, GBCommentFormatter *, com_header, "GB_COM_FORMAT_com_header")
+runtimeAddRProperty(setCom_author, GBCommentFormatter *, com_author, "GB_COM_FORMAT_com_author")
+runtimeAddRProperty(setCom_version, GBCommentFormatter *, com_version, "GB_COM_FORMAT_com_version")
+
+runtimeAddRProperty(setAli_sample, GBCommentFormatter *, ali_sample, "GB_COM_FORMAT_ali_sample")
+runtimeAddRProperty(setAli_ignor, GBCommentFormatter *, ali_ignor, "GB_COM_FORMAT_ali_ignor")
+runtimeAddRProperty(setAtom_categary, GBCommentFormatter *, atom_categary, "GB_COM_FORMAT_atom_categary")
+runtimeAddRProperty(setAtom_title, GBCommentFormatter *, atom_title, "GB_COM_FORMAT_atom_title")
 
 @end

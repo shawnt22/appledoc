@@ -175,15 +175,7 @@ typedef NSUInteger GBProcessingFlag;
 	self.currentContext = context;
 	self.store = aStore;
     
-    NSLog(@"process comment.string -- \n%@\n", comment.stringValue);
-    
-    
 	NSArray *lines = [comment.stringValue arrayOfLines];
-    
-    NSLog(@"process comment.string lines --\n%@\n", lines);
-    
-    NSLog(@"process comment.string formatters --\n%@\n", [[GBCommentFormatterProvider new] formatComment:comment]);
-    
 	NSUInteger line = comment.sourceInfo.lineNumber;
 	NSRange blockRange = NSMakeRange(0, 0);
 	NSRange shortRange = NSMakeRange(0, 0);
@@ -195,6 +187,8 @@ typedef NSUInteger GBProcessingFlag;
 	}
 	[self registerReservedShortDescriptionIfNecessary];
 	self.currentComment.isProcessed = YES;
+    
+    NSLog(@"aaabbbccc - \n%@", comment.formatters);
 }
 
 - (BOOL)findCommentBlockInLines:(NSArray *)lines blockRange:(NSRange *)blockRange shortRange:(NSRange *)shortRange {
@@ -239,8 +233,6 @@ typedef NSUInteger GBProcessingFlag;
 	NSArray *block = [lines subarrayWithRange:blockRange];
 	if ([self isLineMatchingDirectiveStatement:[block firstObject]]) {
 		NSString *string = [self stringByCombiningTrimmedLines:block];
-        
-        NSLog(@"ddeeff -- %@", string);
         
 		if ([self processDiscussionBlockInString:string lines:lines blockRange:blockRange shortRange:shortRange]) return;
 		if ([self processAbstractBlockInString:string lines:lines blockRange:blockRange shortRange:shortRange]) return;

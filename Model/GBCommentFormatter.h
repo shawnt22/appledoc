@@ -31,25 +31,35 @@
 
 @end
 
-#define K_GBCOMMENT_FORMATTER_PARAM         @"param"        //  参数
-#define K_GBCOMMENT_FORMATTER_RESULT        @"result"       //  结果
-#define K_GBCOMMENT_FORMATTER_SAMPLE        @"sample"       //  示例
-#define K_GBCOMMENT_FORMATTER_ABSTRACT      @"abstract"     //  简略描述
-#define K_GBCOMMENT_FORMATTER_DISCUSSION    @"discussion"   //  详细描述
-#define K_GBCOMMENT_FORMATTER_HEADER        @"header"
-#define K_GBCOMMENT_FORMATTER_AUTHOR        @"author"
-#define K_GBCOMMENT_FORMATTER_VERSION       @"version"
+#pragma mark -
+
+//  基本的
+#define K_GBCOMMENT_FORMATTER_PARAM         @"com_param"        //  参数
+#define K_GBCOMMENT_FORMATTER_RESULT        @"com_result"       //  结果
+#define K_GBCOMMENT_FORMATTER_ABSTRACT      @"com_abstract"     //  简略描述
+#define K_GBCOMMENT_FORMATTER_DISCUSSION    @"com_discussion"   //  详细描述
+#define K_GBCOMMENT_FORMATTER_HEADER        @"com_header"
+#define K_GBCOMMENT_FORMATTER_AUTHOR        @"com_author"
+#define K_GBCOMMENT_FORMATTER_VERSION       @"com_version"
+//  支付宝扩展的
+#define K_GBCOMMENT_FORMATTER_ALI_SAMPLE    @"ali_sample"   //  示例
+#define K_GBCOMMENT_FORMATTER_ALI_IGNOR     @"ali_ignor"    //  忽略
+//  ATOM网站扩展的
+#define K_GBCOMMENT_FORMATTER_ATOM_CATEGARY @"atom_categary"    //  功能类目名称
+#define K_GBCOMMENT_FORMATTER_ATOM_TITLE    @"atom_title"       //  功能名称
 
 @interface GBComment (CommentFormatter)
-@property (nonatomic, strong) NSArray *formattedParams;
-@property (nonatomic, strong) NSArray *formattedResults;
-@property (nonatomic, strong) GBCommentFormatter *formattedResult;
-@property (nonatomic, strong) GBCommentFormatter *formattedSample;
-@property (nonatomic, strong) GBCommentFormatter *formattedAbstract;
-@property (nonatomic, strong) GBCommentFormatter *formattedDiscussion;
-@property (nonatomic, strong) GBCommentFormatter *formattedHeader;
-@property (nonatomic, strong) GBCommentFormatter *formattedAuthor;
-@property (nonatomic, strong) GBCommentFormatter *formattedVersion;
+@property (nonatomic, strong) NSArray *com_params;
+@property (nonatomic, strong) NSArray *com_results;
+@property (nonatomic, strong) GBCommentFormatter *com_abstract;
+@property (nonatomic, strong) GBCommentFormatter *com_discussion;
+@property (nonatomic, strong) GBCommentFormatter *com_header;
+@property (nonatomic, strong) GBCommentFormatter *com_author;
+@property (nonatomic, strong) GBCommentFormatter *com_version;
+@property (nonatomic, strong) GBCommentFormatter *ali_sample;
+@property (nonatomic, strong) GBCommentFormatter *ali_ignor;
+@property (nonatomic, strong) GBCommentFormatter *atom_categary;
+@property (nonatomic, strong) GBCommentFormatter *atom_title;
 
 - (void)dispatchFormatters;
 

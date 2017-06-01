@@ -148,15 +148,29 @@
                                                            @"methodTypeString",
                                                            @"formatedArguments",
                                                            @"formatedResults",
-                                                           @"formatedTypePrefix",
-                                                           @"formattedSample",
-                                                           a_isna(@"hasFormattedSample")] toDict:dict];
+                                                           a_isna(@"hasArguments"),
+                                                           a_isna(@"hasResults")] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
+}
+- (NSString *)formatedTypePrefix
+{
+    NSString *prefix = nil;
+    switch (self.methodType) {
+        case GBMethodTypeClass:
+            prefix = @"+";
+            break;
+        case GBMethodTypeInstance:
+            prefix = @"-";
+            break;
+        default:
+            break;
+    }
+    return prefix;
 }
 - (NSArray *)formatedArguments
 {
     NSMutableArray *list = nil;
-    if (self.comment.hasMethodParameters) {
+    if ([self hasArguments_VALUE]) {
         list = [NSMutableArray arrayWithCapacity:[self.methodArguments count]];
         for (NSInteger index = 0; index < [self.methodArguments count]; index++) {
             GBCommentArgument *commentArgument = index < [self.comment.methodParameters count] ? self.comment.methodParameters[index] : nil;
@@ -180,11 +194,11 @@
 - (NSArray *)formatedResults
 {
     NSMutableArray *list = nil;
-    if (self.comment.hasMethodResult) {
+    if ([self hasResults_VALUE]) {
         list = [NSMutableArray arrayWithCapacity:[self.methodResultTypes count]];
         
-        GBCommentComponent *component = [self.comment.methodResult.components firstObject];
-        NSString *arguDesc = component.stringValue;
+        GBCommentFormatter *formatter = [self.comment.com_results firstObject];
+        NSString *arguDesc = formatter.desc;
         
         NSMutableString *arguType = [NSMutableString stringWithString:@""];
         [self.methodResultTypes enumerateObjectsUsingBlock:^(NSString * _Nonnull type, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -199,35 +213,15 @@
     }
     return [NSArray arrayWithArray:list];
 }
-- (NSString *)formatedTypePrefix
+- (NSValue *)hasArguments_VALUE
 {
-    NSString *prefix = nil;
-    switch (self.methodType) {
-        case GBMethodTypeClass:
-            prefix = @"+";
-            break;
-        case GBMethodTypeInstance:
-            prefix = @"-";
-            break;
-        default:
-            break;
-    }
-    return prefix;
+    return @([self.methodArguments count] > 0 ? YES : NO);
 }
-- (NSString *)formattedSample
+- (NSValue *)hasResults_VALUE
 {
-    NSString *sample = nil;
-    for (GBCommentFormatter *formatter in self.comment.formatters) {
-        if ([formatter.name isEqualToString:@"sample"]) {
-            sample = formatter.desc;
-        }
-    }
-    return sample;
+    return @(self.comment.hasMethodResult);
 }
-- (NSValue *)hasFormattedSample_VALUE
-{
-    return @([[self formattedSample] length] > 0 ? YES : NO);
-}
+
 
 @end
 
@@ -352,45 +346,50 @@
 - (NSDictionary *)mustacheHashDict
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [GBMustacheModelHelper addMustacheHash:self selNames:@[@"shortDescription",
-                                                           @"longDescription",
-                                                           @"relatedItems",
-                                                           @"methodParameters",
-                                                           @"methodExceptions",
-                                                           @"methodResult",
-                                                           @"availability",
-                                                           a_isna(@"hasShortDescription"),
-                                                           a_isna(@"hasLongDescription"),
-                                                           a_isna(@"hasMethodParameters"),
-                                                           a_isna(@"hasMethodExceptions"),
-                                                           a_isna(@"hasMethodResult"),
-                                                           a_isna(@"hasAvailability"),
+    [GBMustacheModelHelper addMustacheHash:self selNames:@[@"com_params",
+                                                           @"com_results",
+                                                           @"com_abstract",
+                                                           @"com_discussion",
+                                                           @"ali_sample",
+                                                           @"atom_categary",
+                                                           @"atom_title",
+                                                           a_isna(@"hascom_params"),
+                                                           a_isna(@"hascom_results"),
+                                                           a_isna(@"hascom_abstract"),
+                                                           a_isna(@"hascom_discussion"),
+                                                           a_isna(@"hasali_sample"),
+                                                           a_isna(@"hasatom_categary"),
+                                                           a_isna(@"hasatom_title"),
                                                            @"formatters"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
 }
-- (NSValue *)hasShortDescription_VALUE
+- (NSValue *)hascom_params_VALUE
 {
-    return @(self.hasShortDescription);
+    return @([self.com_params count] > 0 ? YES : NO);
 }
-- (NSValue *)hasLongDescription_VALUE
+- (NSValue *)hascom_results_VALUE
 {
-    return @(self.hasLongDescription);
+    return @([self.com_results count] > 0 ? YES : NO);
 }
-- (NSValue *)hasMethodParameters_VALUE
+- (NSValue *)hascom_abstract_VALUE
 {
-    return @(self.hasMethodParameters);
+    return @(self.com_abstract ? YES : NO);
 }
-- (NSValue *)hasMethodExceptions_VALUE
+- (NSValue *)hascom_discussion_VALUE
 {
-    return @(self.hasMethodExceptions);
+    return @(self.com_discussion ? YES : NO);
 }
-- (NSValue *)hasMethodResult_VALUE
+- (NSValue *)hasali_sample_VALUE
 {
-    return @(self.hasMethodResult);
+    return @(self.ali_sample ? YES : NO);
 }
-- (NSValue *)hasAvailability_VALUE
+- (NSValue *)hasatom_categary_VALUE
 {
-    return @(self.hasAvailability);
+    return @(self.atom_categary ? YES : NO);
+}
+- (NSValue *)hasatom_title_VALUE
+{
+    return @(self.atom_title ? YES : NO);
 }
 
 @end
