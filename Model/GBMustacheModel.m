@@ -37,8 +37,26 @@
                                                            @"nameOfSuperclass",
                                                            @"superclass",
                                                            @"adoptedProtocols",
-                                                           @"methods"] toDict:dict];
+                                                           @"methods",
+                                                           a_isna(@"hasProtocols"),
+                                                           @"formattedProtocols"] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
+}
+- (NSString *)formattedProtocols
+{
+    if ([self.adoptedProtocols.protocols count] > 0) {
+        NSMutableString *result = [NSMutableString stringWithString:@"<"];
+        NSArray *protocols = self.adoptedProtocols.protocolsSortedByName;
+        [protocols enumerateObjectsUsingBlock:^(GBProtocolData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [result appendFormat:@"%@%@", obj.nameOfProtocol, (idx==[protocols count]-1 ? @">" : @", ")];
+        }];
+        return result;
+    }
+    return nil;
+}
+- (NSValue *)hasProtocols_VALUE
+{
+    return @([self.adoptedProtocols.protocols count] > 0 ? YES : NO);
 }
 
 @end

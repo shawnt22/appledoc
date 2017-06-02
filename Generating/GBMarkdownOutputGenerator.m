@@ -33,12 +33,11 @@
         NSLog(@"class.comment.formatter ***\n%@", class.comment.formatters);
         
         for (GBMethodData *method in class.methods.methods) {
+            NSLog(@"method.comment.formatter ---\n%@", method.comment.formatters);
             
-            if (method.isProperty) {
-                NSLog(@"skip property %@ %@", method.methodSelector, class.nameOfClass);
+            if ([self canIgnorMethod:method class:class]) {
                 continue;
             }
-            NSLog(@"method.comment.formatter ---\n%@", method.comment.formatters);
             
             
             NSMutableDictionary *hash = [NSMutableDictionary dictionary];
@@ -50,17 +49,14 @@
             
             [hash setObjectSafely:[class mustacheHash] forKey:@"classData"];
             
-            NSString *output = [[self classmethodTemplate] renderObject:hash];
+            NSString *stream = [[self classmethodTemplate] renderObject:hash];
+            stream = [GBMarkdownOutputGenerator resumeHTMLEscape:stream];
             
-            NSString *filename = [NSString stringWithFormat:@"%@_%@.md", class.nameOfClass, method.methodSelector];
-            filename = [filename lowercaseString];
-            filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@"_"];
-            NSString *path = [[self.outputUserPath stringByAppendingPathComponent:filename] stringByStandardizingPath];
+            NSString *path = [[self.outputUserPath stringByAppendingPathComponent:[self outputFileName:method class:class]] stringByStandardizingPath];
             
             GBLogDebug(@"markdown output path : %@", path);
             
-            if (![self writeString:output toFile:path error:error]) {
-                NSLog(@"Failed writing Markdown for class %@ to '%@'!", class, path);
+            if (![self writeString:stream toFile:path error:error]) {
                 GBLogWarn(@"Failed writing Markdown for class %@ to '%@'!", class, path);
                 return NO;
             }
@@ -112,6 +108,38 @@
         }
     }
     [methodData setObjectSafely:formatedArguments forKey:key];
+}
+- (BOOL)canIgnorMethod:(GBMethodData *)method class:(GBClassData *)class
+{
+    if (method.isProperty) {
+        NSLog(@"skip property %@ %@", method.methodSelector, class.nameOfClass);
+        return YES;
+    }
+    if (method.comment.ali_ignor && [method.comment.ali_ignor.desc boolValue]) {
+        NSLog(@"skip ignor %@ %@", method.methodSelector, class.nameOfClass);
+        return YES;
+    }
+    return NO;
+}
+- (NSString *)outputFileName:(GBMethodData *)method class:(GBClassData *)class
+{
+    NSString *filename = [NSString stringWithFormat:@"%@_%@.md", class.nameOfClass, method.methodSelector];
+    filename = [filename lowercaseString];
+    filename = [filename stringByReplacingOccurrencesOfString:@":" withString:@"_"];
+    return filename;
+}
++ (NSString *)resumeHTMLEscape:(NSString *)string
+{
+    NSDictionary *store = @{@"&amp;"    :@"&",
+                            @"&lt;"     :@"<",
+                            @"&gt;"     :@">",
+                            @"&quot;"   :@"\"",
+                            @"&apos;"   :@"\\"};
+    for (NSString *escape in [store allKeys]) {
+        NSString *resume = store[escape];
+        string = [string stringByReplacingOccurrencesOfString:escape withString:resume];
+    }
+    return string;
 }
 
 @end

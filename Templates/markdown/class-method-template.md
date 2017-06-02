@@ -5,7 +5,7 @@ title: {{methodData.comment.atom_title.desc}}
 
 ## {{methodData.formatedTypePrefix}} {{methodData.methodSelector}} 
 
-`{{classData.nameOfClass}}``{{methodData.comment.sourceInfo.filename}}`
+`{{classData.nameOfClass}}``{{#classData.hasProtocols}}{{classData.formattedProtocols}}{{/classData.hasProtocols}}``{{methodData.comment.sourceInfo.filename}}`
 
 {{methodData.comment.com_abstract.desc}}
 {{#methodData.comment.hascom_discussion}}> {{methodData.comment.com_discussion.desc}}{{/methodData.comment.hascom_discussion}}
