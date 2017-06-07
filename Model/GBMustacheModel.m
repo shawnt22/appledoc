@@ -167,6 +167,7 @@
                                                            @"formatedArguments",
                                                            @"formatedResults",
                                                            @"formatedTypePrefix",
+                                                           @"formattedAtomTitle",
                                                            a_isna(@"hasArguments"),
                                                            a_isna(@"hasResults")] toDict:dict];
     return [NSDictionary dictionaryWithDictionary:dict];
@@ -185,6 +186,17 @@
             break;
     }
     return prefix;
+}
+- (NSString *)formattedAtomTitle
+{
+    NSString *title = self.comment.atom_title.desc;
+    if ([title length] <= 0) {
+        title = self.comment.com_abstract.desc;
+    }
+    if ([title length] <= 0) {
+        title = self.methodSelector;
+    }
+    return title;
 }
 - (NSArray *)formatedArguments
 {
