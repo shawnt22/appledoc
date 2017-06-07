@@ -245,7 +245,7 @@
 }
 - (NSValue *)hasArguments_VALUE
 {
-    return @([self.methodArguments count] > 0 ? YES : NO);
+    return @(self.comment.hasMethodParameters);
 }
 - (NSValue *)hasResults_VALUE
 {
